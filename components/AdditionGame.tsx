@@ -13,8 +13,8 @@ import { useState } from "react";
 import Confetti from "react-confetti";
 
 export const AdditionGame = () => {
-  const [number1, setNumber1] = useState(createRandomNumber(1, 10));
-  const [number2, setNumber2] = useState(createRandomNumber(1, 10));
+  const [number1, setNumber1] = useState(createRandomNumber(1, 50));
+  const [number2, setNumber2] = useState(createRandomNumber(1, 20));
   const [answer, setAnswer] = useState<string | null>(null);
   const [correct, setCorrect] = useState(false);
   const [submitted, setSubmitted] = useState(false);
