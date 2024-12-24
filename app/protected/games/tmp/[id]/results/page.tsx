@@ -16,9 +16,10 @@ const getGame = async (id: string) => {
 export default async function ResultsPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const game = await getGame(params.id);
+  const gameId = (await params).id;
+  const game = await getGame(gameId);
   console.log(game);
 
   if (!game) {
