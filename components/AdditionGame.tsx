@@ -1,6 +1,6 @@
 "use client";
 
-import { addAnswer } from "@/app/protected/games/add/actions";
+import { addAnswer } from "@/app/protected/games/[id]/play/actions";
 import clsx from "clsx";
 import { ArrowRight, Check, SendHorizontal, X } from "lucide-react";
 import { useState } from "react";

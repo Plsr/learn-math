@@ -11,6 +11,7 @@ export type Database = {
     Tables: {
       game: {
         Row: {
+          active: boolean | null
           answers: boolean[] | null
           id: number
           rounds: number
@@ -18,6 +19,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          active?: boolean | null
           answers?: boolean[] | null
           id?: never
           rounds: number
@@ -25,6 +27,7 @@ export type Database = {
           user_id?: string
         }
         Update: {
+          active?: boolean | null
           answers?: boolean[] | null
           id?: never
           rounds?: number

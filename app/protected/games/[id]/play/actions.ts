@@ -35,7 +35,7 @@ export const addAnswer = async (correct: boolean, gameId: number) => {
     console.log(data.rounds - 1);
     if (data.answers.length === data.rounds) {
       console.log("game finished");
-      redirect(`/protected/games/tmp/${gameId}/results`);
+      redirect(`/protected/games/${gameId}/results`);
     }
   }
 
