@@ -33,7 +33,8 @@ export default function RootLayout({
       <body className="bg-purple-50 text-foreground">
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
+          forcedTheme="light"
           enableSystem
           disableTransitionOnChange
         >

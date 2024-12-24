@@ -1,20 +1,21 @@
 "use client";
-import clsx from "clsx";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Check,
-  Send,
-  SendHorizonal,
-  SendHorizontal,
-  X,
-} from "lucide-react";
-import { useState } from "react";
-import Confetti from "react-confetti";
 
-export const AdditionGame = () => {
-  const [number1, setNumber1] = useState(createRandomNumber(1, 10));
-  const [number2, setNumber2] = useState(createRandomNumber(1, 10));
+import { addAnswer } from "@/app/protected/games/add/actions";
+import clsx from "clsx";
+import { ArrowRight, Check, SendHorizontal, X } from "lucide-react";
+import { useState } from "react";
+
+import Confetti from "react-confetti-boom";
+
+export const AdditionGame = ({
+  gameId,
+  number1,
+  number2,
+}: {
+  gameId: number;
+  number1: number;
+  number2: number;
+}) => {
   const [answer, setAnswer] = useState<string | null>(null);
   const [correct, setCorrect] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -28,8 +29,6 @@ export const AdditionGame = () => {
   };
 
   const reset = () => {
-    setNumber1(createRandomNumber(1, 10));
-    setNumber2(createRandomNumber(1, 10));
     setAnswer(null);
     setCorrect(false);
     setSubmitted(false);
@@ -39,9 +38,19 @@ export const AdditionGame = () => {
     reset();
   };
 
-  const handleSubmitClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmitClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (number1 + number2 === parseInt(answer ?? "0")) {
       setCorrect(true);
+      setAnswer(null);
+      setTimeout(async () => {
+        await addAnswer(true, gameId);
+      }, 1000);
+    } else {
+      setCorrect(false);
+      setAnswer(null);
+      setTimeout(async () => {
+        await addAnswer(false, gameId);
+      }, 1000);
     }
     setSubmitted(true);
   };
@@ -71,7 +80,10 @@ export const AdditionGame = () => {
           {submitted && (
             <>
               {correct ? (
-                <Check className="w-6 h-6 text-white" />
+                <div>
+                  <Confetti />
+                  <Check className="w-6 h-6 text-white" />
+                </div>
               ) : (
                 <X className="w-6 h-6 text-white" />
               )}
@@ -82,7 +94,6 @@ export const AdditionGame = () => {
       </div>
       {submitted && (
         <div className="mt-8 flex flex-row items-center justify-end gap-4">
-          {correct && <Confetti />}
           <button
             className="flex gap-2 border shadow-md border-slate-400 bg-slate-100 px-6 py-4 rounded-lg font-bold"
             onClick={handleNextClick}
@@ -93,11 +104,6 @@ export const AdditionGame = () => {
       )}
     </div>
   );
-};
-
-// Create a random integer between min and max
-const createRandomNumber = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 const NumberDisplay = ({ number }: { number: number }) => {
